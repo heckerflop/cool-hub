@@ -13,6 +13,8 @@ local Tab = Window:MakeTab({
 
 -- Buttons
 Tab:AddButton({
-	Name = "Yeet gui",
-	Callback = function()  loadstring(game:HttpGet("https://raw.githubusercontent.com/richfloppa/rich-hub/main/yeet-gui"))() end    
+	Name = "Button!",
+	Callback = function()
+      		print("true")
+  	end    
 })
