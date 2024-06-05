@@ -1,20 +1,53 @@
-game:GetService("GuiService"):ClearError() 
+if game.PlaceId == 6403373529 then
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Cool Hub", HidePremium = false, IntroText = "Cool Hub", SaveConfig = true, ConfigFolder = "scripts"})
 
-local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Giangplay/Script/main/Orion_Library_PE_V2.lua")))()
-
-local Window = OrionLib:MakeWindow({Name = ("Cool Hub", HidePremium = false, IntroText = "Cool Hub", SaveConfig = true, ConfigFolder = "Scripts"})
-
--- Tabs
 local Tab = Window:MakeTab({
 	Name = "Universal",
-	Icon = "rbxassetid://7743869612",
+	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
 
--- Buttons
+local Tab2 = Window:MakeTab({
+	Name = "Player",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab2:AddSlider({
+	Name = "WalkSpeed",
+	Min = 20,
+	Max = 1000,
+	Default = 5,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "WalkSpeed",
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+		Walkspeed = Value
+	end    
+})
+
+Tab2:AddSlider({
+	Name = "JumpPower",
+	Min = 50,
+	Max = 1000,
+	Default = 5,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "JumpPower",
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
+		JumpPower = Value
+	end    
+})
+
 Tab:AddButton({
-	Name = "Button!",
+	Name = "Dark Dex",
 	Callback = function()
-      		print("true")
+      		loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/dex"))()
   	end    
 })
+
+end
+OrionLib:Init()
