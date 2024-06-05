@@ -8,16 +8,9 @@ local Tab1 = Window:MakeTab({
 	PremiumOnly = false
 })
 
-IYTab:AddButton({
-	Name = "Infinite Yield",
-	Callback = function()
-      		print("button pressed")
-  	end
-})
-
 Tab:AddToggle({
-	Name = "This is a toggle!",
-	Default = false,
+	Name = "Auto Tap (FOR OVERKILL)",
+	Default = true,
 	Callback = function(Value)
 		print(Value)
 	end    
