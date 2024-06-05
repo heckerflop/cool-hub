@@ -1,6 +1,28 @@
 if game.PlaceId == 6403373529 then
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Cool Hub", HidePremium = false, SaveConfig = false, ConfigFolder = ""})
+local Window = OrionLib:MakeWindow({Name = "Cool Hub", HidePremium = false, IntroText = "Cool Hub", SaveConfig = false, ConfigFolder = ""})
+
+local Tab1 = Window:MakeTab({
+	Name = "Player",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+IYTab:AddButton({
+	Name = "Infinite Yield",
+	Callback = function()
+      		print("button pressed")
+  	end
+})
+
+Tab:AddToggle({
+	Name = "This is a toggle!",
+	Default = false,
+	Callback = function(Value)
+		print(Value)
+	end    
+})
+
 
 
 
