@@ -80,7 +80,14 @@ Tab:AddButton({
 Tab:AddButton({
 	Name = "Fly GUI",
 	Callback = function()
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))() 
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/fly-gui"))()
+        end    
+})
+
+Tab:AddButton({
+	Name = "Infinite Yield",
+	Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/inf-yield"))()
         end    
 })
 
