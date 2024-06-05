@@ -1,29 +1,11 @@
-if game.PlaceId == 6403373529 then
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Cool Hub", HidePremium = false, IntroText = "Cool Hub", SaveConfig = false, ConfigFolder = ""})
+game:GetService("GuiService"):ClearError() 
 
-local Tab1 = Window:MakeTab({
+local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Giangplay/Script/main/Orion_Library_PE_V2.lua")))()
+
+local Window = OrionLib:MakeWindow({Name = ("Rich Hub".." | ".. identifyexecutor()), HidePremium = false, IntroText = "Rich Hub", SaveConfig = true, ConfigFolder = "Scripts"})
+
+local Tab = Window:MakeTab({
 	Name = "Player",
-	Icon = "rbxassetid://4483345998",
+	Icon = "rbxassetid://4335489011",
 	PremiumOnly = false
 })
-
-Tab:AddToggle({
-	Name = "Auto Tap (FOR OVERKILL)",
-	Default = true,
-	Callback = function(Value)
-		print(Value)
-	end    
-})
-
-Tab:AddButton({
-	Name = "Button!",
-	Callback = function()
-      		print("button pressed")
-  	end    
-})
-
-
-
-end
-OrionLib:Init()
