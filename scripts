@@ -16,7 +16,12 @@ Tab:AddToggle({
 	end    
 })
 
-
+Tab:AddButton({
+	Name = "Button!",
+	Callback = function()
+      		print("button pressed")
+  	end    
+})
 
 
 
