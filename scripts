@@ -5,7 +5,7 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 local Window = OrionLib:MakeWindow({Name = "Cool Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
 --[[
-Name = <string> - The name of the UI.
+Name = "Cool Hub" - The name of the UI.
 HidePremium = <bool> - Whether or not the user details shows Premium status or not.
 SaveConfig = <bool> - Toggles the config saving in the UI.
 ConfigFolder = <string> - The name of the folder where the configs are saved.
@@ -23,23 +23,23 @@ local Tab = Window:MakeTab({
 })
 
 --[[
-Name = <string> - The name of the tab.
-Icon = <string> - The icon of the tab.
-PremiumOnly = <bool> - Makes the tab accessible to Sirus Premium users only.
+Name = "Home" - The name of the tab.
+Icon = <string>
+PremiumOnly = false - Makes the tab accessible to Sirus Premium users only.
 ]]
 
 OrionLib:MakeNotification({
-	Name = "Title!",
-	Content = "Notification content... what will it say??",
+	Name = "Welcome!!",
+	Content = "Welcome To The Cool Hub!",
 	Image = "rbxassetid://4483345998",
 	Time = 5
 })
 
 --[[
-Title = <string> - The title of the notification.
-Content = <string> - The content of the notification.
+Title = "Welcome!" - The title of the notification.
+Content = "Welcome To The Cool Hub!" - The content of the notification.
 Image = <string> - The icon of the notification.
-Time = <number> - The duration of the notfication.
+Time = 5 - The duration of the notfication.
 ]]
 
 Tab:AddButton({
@@ -63,8 +63,9 @@ Tab:AddToggle({
 })
 
 --[[
-Name = <string> - The name of the toggle.
-Default = <bool> - The default value of the toggle.
+Name = "Destroy Gui" - The name of the toggle.
+Default = true - The default value of the toggle.
 Callback = <function> - The function of the toggle.
 ]]
 
+OrionLib:Init()
