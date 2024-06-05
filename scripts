@@ -2,10 +2,17 @@ game:GetService("GuiService"):ClearError()
 
 local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Giangplay/Script/main/Orion_Library_PE_V2.lua")))()
 
-local Window = OrionLib:MakeWindow({Name = ("Rich Hub".." | ".. identifyexecutor()), HidePremium = false, IntroText = "Cool Hub", SaveConfig = true, ConfigFolder = "Scripts"})
+local Window = OrionLib:MakeWindow({Name = ("Cool Hub", HidePremium = false, IntroText = "Cool Hub", SaveConfig = true, ConfigFolder = "Scripts"})
 
+-- Tabs
 local Tab = Window:MakeTab({
-	Name = "Player",
-	Icon = "rbxassetid://4335489011",
+	Name = "Universal",
+	Icon = "rbxassetid://7743869612",
 	PremiumOnly = false
+})
+
+-- Buttons
+Tab:AddButton({
+	Name = "Yeet gui",
+	Callback = function()  loadstring(game:HttpGet("https://raw.githubusercontent.com/richfloppa/rich-hub/main/yeet-gui"))() end    
 })
