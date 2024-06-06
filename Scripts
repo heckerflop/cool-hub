@@ -14,6 +14,12 @@ local Tab2 = Window:MakeTab({
 	PremiumOnly = false
 })
 
+local Tab3 = Window:MakeTab({
+	Name = "Slap Battles",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
 Tab2:AddSlider({
 	Name = "WalkSpeed",
 	Min = 20,
@@ -103,6 +109,31 @@ Tab:AddButton({
 	Callback = function()
                 loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/rejoin"))()
         end    
+})
+
+Tab4:AddDropdown({
+	Name = "Teleport",
+	Default = "",
+	Options = {"Safe spot", "Arena",  "Default Arena", "Lobby", "Tournament", "Moai Island", "Slapple Island", "Plate"},
+	Callback = function(Value)
+if Value == "Safe spot" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Spot.CFrame * CFrame.new(0,28,0)
+elseif Value == "Arena" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
+elseif Value == "Moai Island" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(215, -15.5, 0.5)
+elseif Value == "Slapple Island" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Arena.island5.Union.CFrame * CFrame.new(0,3.25,0)
+elseif Value == "Plate" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.Plate.CFrame * CFrame.new(0,2,0)
+elseif Value == "Tournament" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Battlearena.Arena.CFrame * CFrame.new(0,10,0)
+elseif Value == "Default Arena" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(120,360,-3)
+elseif Value == "Lobby" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-800,328,-2.5)
+end
+	end    
 })
 
 local function randomString(length)
