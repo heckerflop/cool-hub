@@ -91,6 +91,20 @@ Tab:AddButton({
         end    
 })
 
+Tab:AddButton({
+	Name = "FE Yeet GUI",
+	Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/yeet"))()
+        end    
+})
+
+Tab:AddButton({
+	Name = "Rejoin",
+	Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/rejoin"))()
+        end    
+})
+
 local function randomString(length)
     local chars = {}
     for i = 1, length do
