@@ -111,13 +111,20 @@ Tab:AddButton({
         end    
 })
 
-Tab4:AddDropdown({
+Tab3:AddButton({
+	Name = "Hub That Exists",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/hub-that-exists"))()
+        end    
+})
+
+Tab3:AddDropdown({
 	Name = "Teleport",
 	Default = "",
-	Options = {"Safe spot", "Arena",  "Default Arena", "Lobby", "Tournament", "Moai Island", "Slapple Island", "Plate"},
+	Options = {"brazil", "Arena",  "Default Arena", "Lobby", "Tournament", "Moai Island", "Slapple Island", "Plate"},
 	Callback = function(Value)
-if Value == "Safe spot" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Spot.CFrame * CFrame.new(0,28,0)
+if Value == "brazil" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(-725.4454956054688, 309.5386962890625, -0.945555567741394)
 elseif Value == "Arena" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
 elseif Value == "Moai Island" then
