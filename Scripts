@@ -2,6 +2,15 @@ local player = game.Players.LocalPlayer
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Cool Hub", HidePremium = false, IntroText = "Cool Hub", SaveConfig = false, ConfigFolder = "Scripts"})
 
+if workspace:FindFirstChild("SafeSpot") == nil then
+    local SafeSpot = Instance.new("Part")
+    SafeSpot.Anchored = true
+    SafeSpot.Size = Vector3.new(100, 100, 100)
+    SafeSpot.CFrame = CFrame.new(-2000, 100, -2000)
+    SafeSpot.BrickColor = BrickColor.new("Parsley green")
+    SafeSpot.Parent = game:GetService("Workspace")
+end
+
 local Tab = Window:MakeTab({
 	Name = "Universal",
 	Icon = "rbxassetid://4483345998",
@@ -121,25 +130,27 @@ Tab3:AddButton({
 Tab3:AddDropdown({
 	Name = "Teleport",
 	Default = "",
-	Options = {"brazil", "Arena",  "Default Arena", "Lobby", "Tournament", "Moai Island", "Slapple Island", "Plate"},
+	Options = {"Safe Spot", "brazil", "Arena",  "Default Arena", "Lobby", "Tournament", "Moai Island", "Slapple Island", "Plate"},
 	Callback = function(Value)
-if Value == "brazil" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(-725.4454956054688, 309.5386962890625, -0.945555567741394)
-elseif Value == "Arena" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
-elseif Value == "Moai Island" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(215, -15.5, 0.5)
-elseif Value == "Slapple Island" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Arena.island5.Union.CFrame * CFrame.new(0,3.25,0)
-elseif Value == "Plate" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.Plate.CFrame * CFrame.new(0,2,0)
-elseif Value == "Tournament" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Battlearena.Arena.CFrame * CFrame.new(0,10,0)
-elseif Value == "Default Arena" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(120,360,-3)
-elseif Value == "Lobby" then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-800,328,-2.5)
-end
+		if Value == "Safe Spot" then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(-2000, 100, -2000)
+		elseif Value == "brazil" then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(-725.4454956054688, 309.5386962890625, -0.945555567741394)
+		elseif Value == "Arena" then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Origo.CFrame * CFrame.new(0,-5,0)
+		elseif Value == "Moai Island" then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(215, -15.5, 0.5)
+		elseif Value == "Slapple Island" then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.Arena.island5.Union.CFrame * CFrame.new(0,3.25,0)
+		elseif Value == "Plate" then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Arena.Plate.CFrame * CFrame.new(0,2,0)
+		elseif Value == "Tournament" then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.Battlearena.Arena.CFrame * CFrame.new(0,10,0)
+		elseif Value == "Default Arena" then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(120,360,-3)
+		elseif Value == "Lobby" then
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-800,328,-2.5)
+		end
 	end    
 })
 
