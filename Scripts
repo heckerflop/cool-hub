@@ -127,6 +127,13 @@ Tab3:AddButton({
         end    
 })
 
+Tab:AddButton({
+	Name = "Spawn bob (in testing)",
+	Callback = function()
+		game.ReplicatedStorage.bob:FireServer()
+        end    
+})
+
 Tab3:AddDropdown({
 	Name = "Teleport",
 	Default = "",
