@@ -1,0 +1,15 @@
+local slapInterval = 0.1
+
+local function simulateClick()
+    local player = game.Players.LocalPlayer
+    local mouse = player:GetMouse()
+    
+    mouse1press()
+    wait(slapInterval)
+    mouse1release()
+end
+
+while true do
+    simulateClick()
+    wait(slapInterval)
+end
