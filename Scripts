@@ -161,13 +161,11 @@ Tab3:AddDropdown({
 	end    
 })
 
-Tab3:AddToggle({
-	Name = "Auto Slap",
-	Default = false,
-	Callback = function(Value)
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/auto-slap"))()
-	     end
-	end    
+Tab3:AddButton({
+	Name = "Focus on peoples",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/auto-rotate-player"))()
+        end    
 })
 
 local function randomString(length)
