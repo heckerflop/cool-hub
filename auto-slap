@@ -1,0 +1,46 @@
+local player = game.Players.LocalPlayer
+
+local isInArena = player:FindFirstChild("isInArena")
+
+local function simulateClick()
+    local VirtualUser = game:GetService("VirtualUser")
+    
+    -- Simulate mouse button 1 click at the center of the screen
+    local screenSize = game:GetService("Workspace").CurrentCamera.ViewportSize
+    local screenCenter = Vector2.new(screenSize.X / 2, screenSize.Y / 2)
+    
+    VirtualUser:MoveMouseTo(screenCenter.X, screenCenter.Y)
+    VirtualUser:Button1Down(screenCenter)
+    wait(0.1)
+    VirtualUser:Button1Up(screenCenter)
+end
+
+local function hasEquippedTool()
+    local leaderstats = player:FindFirstChild("leaderstats")
+    if leaderstats then
+        local glove = leaderstats:FindFirstChild("Glove")
+        if glove then
+            -- Check if the player has the tool equipped
+            local backpack = player:FindFirstChildOfClass("Backpack")
+            if backpack then
+                for _, tool in ipairs(backpack:GetChildren()) do
+                    if tool:IsA("Tool") and tool.Name == glove.Value then
+                        return true
+                    end
+                end
+            end
+        end
+    end
+    return false
+end
+
+if isInArena and isInArena.Value == true then
+    if hasEquippedTool() then
+        for i = 1, 10 do
+            simulateClick()
+            wait(0.1)
+        end
+    else
+        print("smth error just happen")
+    end
+end
