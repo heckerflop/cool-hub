@@ -7,14 +7,13 @@ local UserInputService = game:GetService("UserInputService")
 local camera = Workspace.CurrentCamera
 local localPlayer = Players.LocalPlayer
 
--- Create GUI
 local gui = Instance.new("ScreenGui")
 gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 240, 0, 160) -- Increased size
-frame.Position = UDim2.new(0.2, -120, 0.9, -80) -- Adjusted position to the left
-frame.AnchorPoint = Vector2.new(0.5, 1) -- Set anchor point to bottom center
+frame.Size = UDim2.new(0, 240, 0, 160)
+frame.Position = UDim2.new(0.2, -120, 0.9, -80)
+frame.AnchorPoint = Vector2.new(0.5, 1)
 frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
 frame.BorderSizePixel = 0
 frame.Visible = true
@@ -22,23 +21,22 @@ frame.Parent = gui
 
 local enableButton = Instance.new("TextButton")
 enableButton.Text = "Enable"
-enableButton.Size = UDim2.new(0, 200, 0, 50) -- Adjusted size
+enableButton.Size = UDim2.new(0, 200, 0, 50)
 enableButton.Position = UDim2.new(0.5, -100, 0.1, 0)
 enableButton.Parent = frame
 
 local disableButton = Instance.new("TextButton")
 disableButton.Text = "Disable"
-disableButton.Size = UDim2.new(0, 200, 0, 50) -- Adjusted size
+disableButton.Size = UDim2.new(0, 200, 0, 50)
 disableButton.Position = UDim2.new(0.5, -100, 0.35, 0)
 disableButton.Parent = frame
 
 local closeButton = Instance.new("TextButton")
 closeButton.Text = "Close"
-closeButton.Size = UDim2.new(0, 200, 0, 50) -- Adjusted size
+closeButton.Size = UDim2.new(0, 200, 0, 50)
 closeButton.Position = UDim2.new(0.5, -100, 0.6, 0)
 closeButton.Parent = frame
 
--- Functions for enabling and disabling the script
 local enabled = false
 
 local function enableScript()
@@ -49,7 +47,6 @@ local function disableScript()
     enabled = false
 end
 
--- Function to focus on opponent
 local function findOpponent()
     local players = Players:GetPlayers()
     local nearestOpponent = nil
@@ -74,12 +71,10 @@ local function findOpponent()
 end
 
 local function focusOnOpponent(opponentRootPart)
-    -- Rotate camera to look at the opponent
     local lookVector = (opponentRootPart.Position - camera.CFrame.Position).unit
     camera.CFrame = CFrame.new(camera.CFrame.Position, camera.CFrame.Position + lookVector)
 end
 
--- Enable/disable/close button callbacks
 enableButton.MouseButton1Click:Connect(function()
     enableScript()
 end)
@@ -92,7 +87,6 @@ closeButton.MouseButton1Click:Connect(function()
     gui:Destroy()
 end)
 
--- Main loop
 while true do
     if enabled then
         local opponentRootPart = findOpponent()
@@ -100,5 +94,5 @@ while true do
             focusOnOpponent(opponentRootPart)
         end
     end
-    RunService.Heartbeat:Wait() -- This will wait until the next heartbeat
+    RunService.Heartbeat:Wait()
 end
