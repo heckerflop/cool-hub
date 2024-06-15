@@ -1,98 +1,102 @@
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local UserInputService = game:GetService("UserInputService")
 
 local camera = Workspace.CurrentCamera
 local localPlayer = Players.LocalPlayer
 
-local gui = Instance.new("ScreenGui")
-gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+local function createGUI()
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "OpponentFocusGUI"
+    gui.Enabled = true
+    gui.Parent = localPlayer:WaitForChild("PlayerGui")
 
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 240, 0, 160)
-frame.Position = UDim2.new(0.2, -120, 0.9, -80)
-frame.AnchorPoint = Vector2.new(0.5, 1)
-frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-frame.BorderSizePixel = 0
-frame.Visible = true
-frame.Parent = gui
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 240, 0, 160)
+    frame.Position = UDim2.new(0.2, -120, 0.9, -80)
+    frame.AnchorPoint = Vector2.new(0.5, 1)
+    frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    frame.BorderSizePixel = 0
+    frame.Visible = true
+    frame.Parent = gui
 
-local enableButton = Instance.new("TextButton")
-enableButton.Text = "Enable"
-enableButton.Size = UDim2.new(0, 200, 0, 50)
-enableButton.Position = UDim2.new(0.5, -100, 0.1, 0)
-enableButton.Parent = frame
+    local enableButton = Instance.new("TextButton")
+    enableButton.Text = "Enable"
+    enableButton.Size = UDim2.new(0, 200, 0, 50)
+    enableButton.Position = UDim2.new(0.5, -100, 0.1, 0)
+    enableButton.Parent = frame
 
-local disableButton = Instance.new("TextButton")
-disableButton.Text = "Disable"
-disableButton.Size = UDim2.new(0, 200, 0, 50)
-disableButton.Position = UDim2.new(0.5, -100, 0.35, 0)
-disableButton.Parent = frame
+    local disableButton = Instance.new("TextButton")
+    disableButton.Text = "Disable"
+    disableButton.Size = UDim2.new(0, 200, 0, 50)
+    disableButton.Position = UDim2.new(0.5, -100, 0.35, 0)
+    disableButton.Parent = frame
 
-local closeButton = Instance.new("TextButton")
-closeButton.Text = "Close"
-closeButton.Size = UDim2.new(0, 200, 0, 50)
-closeButton.Position = UDim2.new(0.5, -100, 0.6, 0)
-closeButton.Parent = frame
+    local closeButton = Instance.new("TextButton")
+    closeButton.Text = "Close"
+    closeButton.Size = UDim2.new(0, 200, 0, 50)
+    closeButton.Position = UDim2.new(0.5, -100, 0.6, 0)
+    closeButton.Parent = frame
 
-local enabled = false
+    local enabled = false
 
-local function enableScript()
-    enabled = true
-end
+    local function enableScript()
+        enabled = true
+    end
 
-local function disableScript()
-    enabled = false
-end
+    local function disableScript()
+        enabled = false
+    end
 
-local function findOpponent()
-    local players = Players:GetPlayers()
-    local nearestOpponent = nil
-    local nearestDistance = math.huge
+    local function findOpponent()
+        local players = Players:GetPlayers()
+        local nearestOpponent = nil
+        local nearestDistance = math.huge
 
-    for _, player in ipairs(players) do
-        if player ~= localPlayer then
-            local character = player.Character
-            if character then
-                local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-                if humanoidRootPart then
-                    local distance = (humanoidRootPart.Position - localPlayer.Character.HumanoidRootPart.Position).magnitude
-                    if distance < nearestDistance then
-                        nearestDistance = distance
-                        nearestOpponent = humanoidRootPart
+        for _, player in ipairs(players) do
+            if player ~= localPlayer then
+                local character = player.Character
+                if character and character:IsDescendantOf(Workspace) then
+                    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+                    if humanoidRootPart then
+                        local distance = (humanoidRootPart.Position - localPlayer.Character.HumanoidRootPart.Position).magnitude
+                        if distance < nearestDistance then
+                            nearestDistance = distance
+                            nearestOpponent = humanoidRootPart
+                        end
                     end
                 end
             end
         end
+        return nearestOpponent
     end
-    return nearestOpponent
-end
 
-local function focusOnOpponent(opponentRootPart)
-    local lookVector = (opponentRootPart.Position - camera.CFrame.Position).unit
-    camera.CFrame = CFrame.new(camera.CFrame.Position, camera.CFrame.Position + lookVector)
-end
+    local function focusOnOpponent(opponentRootPart)
+        local lookVector = (opponentRootPart.Position - camera.CFrame.Position).unit
+        camera.CFrame = CFrame.new(camera.CFrame.Position, camera.CFrame.Position + lookVector)
+    end
 
-enableButton.MouseButton1Click:Connect(function()
-    enableScript()
-end)
+    enableButton.MouseButton1Click:Connect(enableScript)
 
-disableButton.MouseButton1Click:Connect(function()
-    disableScript()
-end)
+    disableButton.MouseButton1Click:Connect(disableScript)
 
-closeButton.MouseButton1Click:Connect(function()
-    gui:Destroy()
-end)
+    closeButton.MouseButton1Click:Connect(function()
+        gui:Destroy()
+    end)
 
-while true do
-    if enabled then
-        local opponentRootPart = findOpponent()
-        if opponentRootPart then
-            focusOnOpponent(opponentRootPart)
+    while true do
+        if enabled and localPlayer.Character then
+            local opponentRootPart = findOpponent()
+            if opponentRootPart then
+                focusOnOpponent(opponentRootPart)
+            end
         end
+        RunService.Heartbeat:Wait()
     end
-    RunService.Heartbeat:Wait()
 end
+
+local function playerCharacterExists()
+    return localPlayer.Character and localPlayer.Character:IsDescendantOf(Workspace)
+end
+
+createGUI()
