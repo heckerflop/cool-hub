@@ -1,12 +1,15 @@
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
 
 local camera = Workspace.CurrentCamera
 local localPlayer = Players.LocalPlayer
 
 local enabled = false
 local gui = nil
+local eventFired = false
+local radius = 10 -- Adjust the radius as needed
 
 local function createGUI()
     if gui then
@@ -19,7 +22,7 @@ local function createGUI()
 
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(0, 200, 0, 150)
-    frame.Position = UDim2.new(0, 10, 1, -160)  -- Position in the bottom-left corner with a 10px margin
+    frame.Position = UDim2.new(0, 10, 1, -160) -- Position in the bottom-left corner with a 10px margin
     frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
     frame.BorderSizePixel = 0
     frame.Parent = gui
@@ -59,6 +62,7 @@ end
 
 local function onPlayerDied()
     enabled = false
+    eventFired = false
     if gui then
         gui:Destroy()
         gui = nil
@@ -95,7 +99,7 @@ local function findOpponent()
             end
         end
     end
-    return nearestOpponent
+    return nearestOpponent, nearestDistance
 end
 
 local function focusOnOpponent(opponentRootPart)
@@ -103,11 +107,34 @@ local function focusOnOpponent(opponentRootPart)
     camera.CFrame = CFrame.new(camera.CFrame.Position, camera.CFrame.Position + lookVector)
 end
 
+local function moveToOpponent(opponentRootPart)
+    local character = localPlayer.Character
+    local humanoid = character and character:FindFirstChild("Humanoid")
+    if humanoid and opponentRootPart then
+        humanoid:MoveTo(opponentRootPart.Position)
+    end
+end
+
+local function simulateClick()
+    local userInputService = game:GetService("UserInputService")
+    local clickInput = Instance.new("InputObject")
+    clickInput.UserInputType = Enum.UserInputType.MouseButton1
+    userInputService.InputBegan:Fire(clickInput)
+end
+
 RunService.Heartbeat:Connect(function()
     if enabled and localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        local opponentRootPart = findOpponent()
+        local opponentRootPart, nearestDistance = findOpponent()
         if opponentRootPart then
             focusOnOpponent(opponentRootPart)
+            moveToOpponent(opponentRootPart)
+
+            if nearestDistance <= radius and not eventFired then
+                simulateClick()
+                eventFired = true
+            elseif nearestDistance > radius then
+                eventFired = false
+            end
         end
     end
 end)
