@@ -162,10 +162,19 @@ Tab3:AddDropdown({
 })
 
 Tab3:AddButton({
-	Name = "Focus on peoples",
+	Name = "Auto Aim To Nearest Player",
 	Callback = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/auto-rotate-player"))()
         end    
+})
+
+Tab2:AddToggle({
+	Name = "Auto Aim To Nearest Player (LOOPED)",
+	Default = false,
+	Callback = function(Value)
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/auto-rotate-player"))()
+		end
+	end    
 })
 
 local function randomString(length)
