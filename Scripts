@@ -168,6 +168,13 @@ Tab3:AddButton({
         end    
 })
 
+Tab3:AddButton({
+	Name = "Auto Aim To Nearest Player (No auto move)",
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/auto-rotate-player-no-auto-move"))()
+        end    
+})
+
 local function randomString(length)
     local chars = {}
     for i = 1, length do
