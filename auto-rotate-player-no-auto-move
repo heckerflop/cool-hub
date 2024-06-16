@@ -1,0 +1,121 @@
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+
+local camera = Workspace.CurrentCamera
+local localPlayer = Players.LocalPlayer
+
+local enabled = false
+local gui = nil
+
+local function createGUI()
+    if gui then
+        gui:Destroy()
+    end
+
+    gui = Instance.new("ScreenGui")
+    gui.Name = "OpponentFocusGUI"
+    gui.Parent = localPlayer:WaitForChild("PlayerGui")
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 200, 0, 150)
+    frame.Position = UDim2.new(0, 10, 1, -160)  -- Position in the bottom-left corner with a 10px margin
+    frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    frame.BorderSizePixel = 0
+    frame.Parent = gui
+
+    local enableButton = Instance.new("TextButton")
+    enableButton.Text = "Enable"
+    enableButton.Size = UDim2.new(0, 180, 0, 40)
+    enableButton.Position = UDim2.new(0.5, -90, 0.1, 0)
+    enableButton.Parent = frame
+
+    local disableButton = Instance.new("TextButton")
+    disableButton.Text = "Disable"
+    disableButton.Size = UDim2.new(0, 180, 0, 40)
+    disableButton.Position = UDim2.new(0.5, -90, 0.25, 0)
+    disableButton.Parent = frame
+
+    local closeButton = Instance.new("TextButton")
+    closeButton.Text = "Close"
+    closeButton.Size = UDim2.new(0, 180, 0, 40)
+    closeButton.Position = UDim2.new(0.5, -90, 0.4, 0)
+    closeButton.Parent = frame
+
+    enableButton.MouseButton1Click:Connect(function()
+        enabled = true
+    end)
+    disableButton.MouseButton1Click:Connect(function()
+        enabled = false
+    end)
+    closeButton.MouseButton1Click:Connect(function()
+        gui:Destroy()
+        gui = nil
+        enabled = false
+    end)
+
+    gui.Enabled = true
+end
+
+local function onPlayerDied()
+    enabled = false
+    if gui then
+        gui:Destroy()
+        gui = nil
+    end
+end
+
+local function monitorPlayerDeath()
+    local character = localPlayer.Character
+    if character then
+        local humanoid = character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid.Died:Connect(onPlayerDied)
+        end
+    end
+end
+
+local function findOpponent()
+    local players = Players:GetPlayers()
+    local nearestOpponent = nil
+    local nearestDistance = math.huge
+
+    for _, player in ipairs(players) do
+        if player ~= localPlayer then
+            local character = player.Character
+            if character and character:IsDescendantOf(Workspace) then
+                local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+                if humanoidRootPart then
+                    local distance = (humanoidRootPart.Position - localPlayer.Character.HumanoidRootPart.Position).magnitude
+                    if distance < nearestDistance then
+                        nearestDistance = distance
+                        nearestOpponent = humanoidRootPart
+                    end
+                end
+            end
+        end
+    end
+    return nearestOpponent
+end
+
+local function focusOnOpponent(opponentRootPart)
+    local lookVector = (opponentRootPart.Position - camera.CFrame.Position).unit
+    camera.CFrame = CFrame.new(camera.CFrame.Position, camera.CFrame.Position + lookVector)
+end
+
+RunService.Heartbeat:Connect(function()
+    if enabled and localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local opponentRootPart = findOpponent()
+        if opponentRootPart then
+            focusOnOpponent(opponentRootPart)
+        end
+    end
+end)
+
+localPlayer.CharacterAdded:Connect(function()
+    createGUI()
+    monitorPlayerDeath()
+end)
+
+createGUI()
+monitorPlayerDeath()
