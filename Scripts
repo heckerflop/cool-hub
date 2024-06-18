@@ -195,6 +195,13 @@ Tab3:AddToggle({
         end   
 })
 
+Tab3:AddButton({
+	Name = "Glove ESP",
+	Callback = function(Value)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/heckerflop/cool-hub/main/glove-esp"))()
+        end
+})
+
 local function randomString(length)
     local chars = {}
     for i = 1, length do
