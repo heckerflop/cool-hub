@@ -175,6 +175,26 @@ Tab3:AddButton({
         end    
 })
 
+Tab3:AddToggle({
+		Name = "Rhythm auto press notes (Equip Rhythm)",
+		Default = false,
+		Callback = function(Value)
+	RhythmNoteSpam = Value
+	if game.Players.LocalPlayer.leaderstats.Glove.Value == "Rhythm" then
+	while RhythmNoteSpam do
+	game.Players.LocalPlayer.PlayerGui.Rhythm.LocalScript.Disabled = false
+	game.Players.LocalPlayer.PlayerGui.Rhythm.LocalScript.Disabled = true
+	game.Players.LocalPlayer.Character.Rhythm:Activate()
+	task.wait()
+	end
+	elseif RhythmNoteSpam == true then
+	OrionLib:MakeNotification({Name = "Error",Content = "You don't have Rhythm equipped.",Image = "rbxassetid://7733658504",Time = 5})
+	wait(0.05)
+	RNS:Set(false)
+		end
+        end   
+})
+
 local function randomString(length)
     local chars = {}
     for i = 1, length do
